@@ -48,29 +48,30 @@ eksctl create cluster \
 ### criar o node group
 
 ```
+$ eksctl get nodegroup --cluster demo-cluster --region us-east-1
+Error: No nodegroups found
 ~ $ eksctl create nodegroup \
 >   --cluster demo-cluster \
 >   --region us-east-1 \
->   --name demo-nodes \
+>   --name demo-nodes-2 \
 >   --node-type t3.medium \
 >   --nodes 2 \
 >   --nodes-min 1 \
 >   --nodes-max 3 \
 >   --managed
-2025-09-02 01:43:06 [ℹ]  will use version 1.32 for new nodegroup(s) based on control plane version
-2025-09-02 01:43:07 [ℹ]  nodegroup "demo-nodes" will use "" [AmazonLinux2023/1.32]
-2025-09-02 01:43:07 [ℹ]  1 existing nodegroup(s) (demo-nodes) will be excluded
-2025-09-02 01:43:07 [ℹ]  
-2 sequential tasks: { fix cluster compatibility, no tasks 
+2025-09-02 01:49:36 [ℹ]  will use version 1.32 for new nodegroup(s) based on control plane version
+2025-09-02 01:49:37 [ℹ]  nodegroup "demo-nodes-2" will use "" [AmazonLinux2023/1.32]
+2025-09-02 01:49:37 [ℹ]  1 existing nodegroup(s) (demo-nodes) will be excluded
+2025-09-02 01:49:37 [ℹ]  1 nodegroup (demo-nodes-2) was included (based on the include/exclude rules)
+2025-09-02 01:49:37 [ℹ]  will create a CloudFormation stack for each of 1 managed nodegroups in cluster "demo-cluster"
+2025-09-02 01:49:37 [ℹ]  
+2 sequential tasks: { fix cluster compatibility, 1 task: { 1 task: { create managed nodegroup "demo-nodes-2" } } 
 }
-2025-09-02 01:43:07 [ℹ]  checking cluster stack for missing resources
-2025-09-02 01:43:07 [ℹ]  cluster stack has all required resources
-2025-09-02 01:43:07 [ℹ]  no tasks
-2025-09-02 01:43:07 [✔]  created 0 nodegroup(s) in cluster "demo-cluster"
-2025-09-02 01:43:07 [✔]  created 0 managed nodegroup(s) in cluster "demo-cluster"
-2025-09-02 01:43:07 [ℹ]  checking security group configuration for all nodegroups
-2025-09-02 01:43:07 [ℹ]  all nodegroups have up-to-date cloudformation templates
-~ $ 
+2025-09-02 01:49:37 [ℹ]  checking cluster stack for missing resources
+2025-09-02 01:49:37 [ℹ]  cluster stack has all required resources
+2025-09-02 01:49:37 [ℹ]  building managed nodegroup stack "eksctl-demo-cluster-nodegroup-demo-nodes-2"
+2025-09-02 01:49:37 [ℹ]  deploying stack "eksctl-demo-cluster-nodegroup-demo-nodes-2"
+2025-09-02 01:49:38 [ℹ]  waiting for CloudFormation stack "eksctl-demo-cluster-nodegroup-demo-nodes-2"
 ```
 
 Este comando vai:
