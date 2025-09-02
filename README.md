@@ -146,10 +146,10 @@ eksctl delete cluster --name demo-cluster --region us-east-1
 ### Resumo
 
 ```
-CloudShell: Ambiente Linux gratuito na AWS com ferramentas pré-instaladas
-EKS: Serviço gerenciado do Kubernetes na AWS
-Load Balancer: Criado automaticamente para expor sua aplicação na internet
-Sua aplicação: Roda em pods dentro do cluster, acessível via porta 8080
+1 - CloudShell: Ambiente Linux gratuito na AWS com ferramentas pré-instaladas
+2 - EKS: Serviço gerenciado do Kubernetes na AWS
+3 - Load Balancer: Criado automaticamente para expor sua aplicação na internet
+4 - Sua aplicação: Roda em pods dentro do cluster, acessível via porta 8080
 
 Tudo 100% na AWS, sem precisar instalar nada localmente!
 ```
