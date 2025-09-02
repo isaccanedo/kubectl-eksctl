@@ -126,6 +126,92 @@ kubectl get services demo-auth-service
 kubectl get services demo-auth-service -w
 ```
 
+### Verificar clusters EKS existentes
+
+```
+# Listar todos os clusters EKS na região
+eksctl get cluster
+
+# Ou usando AWS CLI
+aws eks list-clusters --region us-east-1
+```
+
+### Verificar status detalhado do cluster
+
+```
+# Status detalhado do cluster específico
+eksctl get cluster --name demo-cluster --region us-east-1
+
+# Ou detalhes completos via AWS CLI
+aws eks describe-cluster --name demo-cluster --region us-east-1
+```
+
+### Verificar se o kubectl está configurado
+
+```
+# Ver contexto atual do kubectl
+kubectl config current-context
+
+# Listar todos os contextos disponíveis
+kubectl config get-contexts
+
+# Ver configuração completa
+kubectl config view
+```
+
+### Testar conectividade com o cluster
+
+```
+# Verificar nodes do cluster
+kubectl get nodes
+
+# Ver informações detalhadas dos nodes
+kubectl get nodes -o wide
+
+# Verificar namespaces
+kubectl get namespaces
+```
+
+### Verificar node groups
+
+```
+# Listar node groups
+eksctl get nodegroup --cluster demo-cluster --region us-east-1
+
+# Ou via AWS CLI
+aws eks list-nodegroups --cluster-name demo-cluster --region us-east-1
+```
+
+### Monitorar criação em tempo real (se ainda estiver criando)
+
+```
+# Acompanhar logs de criação do cluster
+eksctl utils describe-stacks --region us-east-1 --cluster demo-cluster
+
+# Ver eventos do CloudFormation (onde o cluster é criado)
+aws cloudformation describe-stacks --stack-name eksctl-demo-cluster-cluster --region us-east-1
+```
+```
+Interpretação dos resultados:
+✅ Cluster criado com sucesso quando:
+
+eksctl get cluster mostra status "ACTIVE"
+kubectl get nodes retorna seus nodes
+kubectl config current-context mostra o contexto do EKS
+
+⏳ Ainda criando quando:
+
+eksctl get cluster mostra status "CREATING"
+kubectl get nodes retorna erro de conexão
+Processo pode demorar 15-20 minutos
+
+❌ Erro na criação quando:
+
+eksctl get cluster não mostra o cluster
+Mensagens de erro nos comandos
+Status "FAILED" ou similar
+```
+
 ### Testar a aplicação
 Quando o comando kubectl get services mostrar um EXTERNAL-IP (URL do Load Balancer da AWS), você poderá acessar sua aplicação:
 
