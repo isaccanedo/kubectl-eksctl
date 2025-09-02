@@ -101,3 +101,55 @@ spec:
   type: LoadBalancer
 ```
 
+### Aplicar os recursos no CloudShell
+
+```
+# Criar o arquivo deployment.yaml no CloudShell
+cat > deployment.yaml << 'EOF'
+# Cole o conteúdo do arquivo YAML acima aqui
+EOF
+
+# Aplicar os recursos
+kubectl apply -f deployment.yaml
+```
+
+### Verificar o deploy e obter a URL pública
+
+```
+# Verificar pods
+kubectl get pods
+
+# Verificar services e obter a URL externa
+kubectl get services demo-auth-service
+
+# Aguardar o Load Balancer ficar disponível (pode demorar alguns minutos)
+kubectl get services demo-auth-service -w
+```
+
+### Testar a aplicação
+Quando o comando kubectl get services mostrar um EXTERNAL-IP (URL do Load Balancer da AWS), você poderá acessar sua aplicação:
+
+```
+# Pegar a URL externa
+EXTERNAL_IP=$(kubectl get service demo-auth-service -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+echo "Sua aplicação está disponível em: http://$EXTERNAL_IP"
+```
+
+### Custos e Limpeza
+**Importante:** O EKS cobra por hora de cluster (~$0.10/hora) + instâncias EC2. Para evitar custos:
+
+```
+# Para deletar tudo quando não precisar mais
+eksctl delete cluster --name demo-cluster --region us-east-1
+```
+
+### Resumo
+
+```
+CloudShell: Ambiente Linux gratuito na AWS com ferramentas pré-instaladas
+EKS: Serviço gerenciado do Kubernetes na AWS
+Load Balancer: Criado automaticamente para expor sua aplicação na internet
+Sua aplicação: Roda em pods dentro do cluster, acessível via porta 8080
+
+Tudo 100% na AWS, sem precisar instalar nada localmente!
+```
