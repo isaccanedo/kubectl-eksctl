@@ -45,6 +45,41 @@ eksctl create cluster \
   --managed
 ```
 
+### criar o node group
+
+```
+~ $ eksctl create nodegroup \
+>   --cluster demo-cluster \
+>   --region us-east-1 \
+>   --name demo-nodes \
+>   --node-type t3.medium \
+>   --nodes 2 \
+>   --nodes-min 1 \
+>   --nodes-max 3 \
+>   --managed
+2025-09-02 01:43:06 [ℹ]  will use version 1.32 for new nodegroup(s) based on control plane version
+2025-09-02 01:43:07 [ℹ]  nodegroup "demo-nodes" will use "" [AmazonLinux2023/1.32]
+2025-09-02 01:43:07 [ℹ]  1 existing nodegroup(s) (demo-nodes) will be excluded
+2025-09-02 01:43:07 [ℹ]  
+2 sequential tasks: { fix cluster compatibility, no tasks 
+}
+2025-09-02 01:43:07 [ℹ]  checking cluster stack for missing resources
+2025-09-02 01:43:07 [ℹ]  cluster stack has all required resources
+2025-09-02 01:43:07 [ℹ]  no tasks
+2025-09-02 01:43:07 [✔]  created 0 nodegroup(s) in cluster "demo-cluster"
+2025-09-02 01:43:07 [✔]  created 0 managed nodegroup(s) in cluster "demo-cluster"
+2025-09-02 01:43:07 [ℹ]  checking security group configuration for all nodegroups
+2025-09-02 01:43:07 [ℹ]  all nodegroups have up-to-date cloudformation templates
+~ $ 
+```
+
+Este comando vai:
+
+Criar 2 instâncias EC2 t3.medium
+Configurar um node group gerenciado
+Permitir escalar de 1 a 3 nodes
+
+
 ### Verificar se o cluster foi criado
 
 ```
