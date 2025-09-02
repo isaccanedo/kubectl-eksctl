@@ -58,6 +58,7 @@ kubectl config current-context
 ### Criar os arquivos YAML para sua aplicação
 
 ```
+cat > deployment.yaml << 'EOF'
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -76,7 +77,7 @@ spec:
     spec:
       containers:
       - name: demo-auth
-        image: isac/demo-auth:1.0
+        image: isaccanedo/demo-auth:1.0
         ports:
         - containerPort: 8080
         resources:
@@ -99,6 +100,7 @@ spec:
       port: 80
       targetPort: 8080
   type: LoadBalancer
+EOF
 ```
 
 ### Aplicar os recursos no CloudShell
@@ -210,6 +212,46 @@ Processo pode demorar 15-20 minutos
 eksctl get cluster não mostra o cluster
 Mensagens de erro nos comandos
 Status "FAILED" ou similar
+```
+
+### Comando rápido para verificar tudo
+
+```
+echo "=== Verificando cluster EKS ==="
+eksctl get cluster --region us-east-1
+echo ""
+echo "=== Verificando nodes ==="
+kubectl get nodes
+echo ""
+echo "=== Verificando contexto kubectl ==="
+kubectl config current-context
+```
+
+### Fazer o deploy da aplicação
+
+```
+# Aplicar os recursos no cluster
+kubectl apply -f deployment.yaml
+```
+
+### Verificar o deploy
+
+```
+# Verificar se os pods foram criados
+kubectl get pods
+
+# Verificar se o service foi criado
+kubectl get services
+
+# Ver detalhes do deployment
+kubectl get deployments
+```
+
+### Aguardar o Load Balancer ficar pronto
+
+```
+# Monitorar até aparecer o EXTERNAL-IP (pode demorar 2-5 minutos)
+kubectl get services demo-auth-service -w
 ```
 
 ### Testar a aplicação
